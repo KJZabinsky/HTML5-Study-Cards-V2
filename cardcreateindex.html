@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Data Sheet Maker</title>
+    <style>
+      /* Styles for the form */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      label {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      input[type="text"] {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        width: 50%;
+      }
+      button {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+      
+      /* Styles for the output */
+      pre {
+        font-size: 1.2rem;
+        background-color: #eee;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        max-width: 500px;
+        width: 90%;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data Sheet Maker</h1>
+    <form>
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question">
+      <label for="answer">Answer:</label>
+      <input type="text" id="answer" name="answer">
+      <button type="button" onclick="addQuestionAnswer()">Add Question/Answer</button>
+    </form>
+    <pre id="datasheet-output"></pre>
+    <script>
+      let questionsAnswers = [];
+      
+      function addQuestionAnswer() {
+        // Get the question and answer text from the input fields
+        const question = document.getElementById('question').value;
+        const answer = document.getElementById('answer').value;
+        
+        // Add the question and answer to the list of questions/answers
+        questionsAnswers.push({ question, answer });
+        
+        // Generate the data sheet text output
+        const datasheetOutput = generateDatasheetOutput();
+        
+        // Update the pre element with the data sheet output
+        const datasheetOutputElement = document.getElementById('datasheet-output');
+        datasheetOutputElement.textContent = datasheetOutput;
+        
+        // Clear the input fields
+        document.getElementById('question').value = '';
+        document.getElementById('answer').value = '';
+      }
+      
+      function generateDatasheetOutput() {
+        // Loop through each question/answer pair and generate a string output
+        let output = '';
+        for (let i = 0; i < questionsAnswers.length; i++) {
+          const question = questionsAnswers[i].question;
+          const answer = questionsAnswers[i].answer;
+          output += `Q ${question}\nA ${answer}\n\n`;
+        }
+        return output;
+      }
+    </script>
+  </body>
+</html>
